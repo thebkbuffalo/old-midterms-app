@@ -8,10 +8,22 @@ class MidtermInfoContainer extends Component {
     super(props); 
     this.state = {
       elections: [],
-      reps: []
+      reps: [],
+      voterInfo: []
     } 
   }
-
+  loadElectionsData(){
+    var key = config.civics_api.KEY;
+    axios
+      .get(`https://www.googleapis.com/civicinfo/v2/elections?key=${key}`)
+      .then((res)=>{
+        this.setState({elections: res.data.elections})
+      })
+      .catch((error)=>console.log(error));
+  }
+  componentDidMount(){
+    this.loadElectionsData();
+  }
   getData = (e) => {
     if(e.keyCode==13){
       var key = config.civics_api.KEY;
@@ -20,19 +32,34 @@ class MidtermInfoContainer extends Component {
         .get(`https://www.googleapis.com/civicinfo/v2/representatives?address=${addy}&key=${key}`)
         .then((res)=>{
           this.setState({reps: res.data.officials})
-        }).catch((error)=>console.log(error));
+        })
+        .catch((error)=>console.log(error));
     }
   }
+  // showElections = (e) => {
+  //   var btnText = document.getElementById('showElectionsBtn').innerHTML
+  //   if(btnText.includes('Show')){
+
+  //   }
+  // }
 
   render(){
     return (
       <div>
-        <input id='addyInput' type="text" placeholder="address" onKeyDown={(e)=>this.getData(e)}/>
+        <div id='upcomingElections'>
+          <div id='electionsList'>
+            {this.state.elections.map((election)=>{
+              <p key={election.id}>{election.name}</p>
+            })}
+          </div>
+          {/* <button id='showElectionsBtn' onClick={this.showElections}>Show Upcoming Elections</button> */}
+        </div>
+        <p>Zip Code: <input id='addyInput' type="text" placeholder="Zip Code" onKeyDown={(e)=>this.getData(e)}/></p>
         <p>React is weird. Either way here's your local voting info</p>
         <ul>
           {this.state.reps.map((official)=>{
             return (
-              <p key={official.name}>{official.name}</p>
+              <li key={official.name}>{official.name}</li>
             )
           })}
         </ul>
