@@ -2,6 +2,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import config from '../config.js';
+import ReactDOM from 'react-dom';
+import Countdown from 'react-countdown';
+
 
 class MidtermInfoContainer extends Component {
   constructor(props){
@@ -51,6 +54,9 @@ class MidtermInfoContainer extends Component {
   render(){
     return (
       <div>
+        <div id="countdown_area">
+          <h1>Time until Midterms: <Countdown date={'2022-11-09'} /></h1>
+        </div>
         <div id='upcomingElections'>
           <button id='showElectionsBtn' onClick={this.showElections}>Show Upcoming Elections</button>
           <div id='electionsList'>
