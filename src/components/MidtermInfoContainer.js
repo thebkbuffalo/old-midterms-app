@@ -36,12 +36,17 @@ class MidtermInfoContainer extends Component {
         .catch((error)=>console.log(error));
     }
   }
-  // showElections = (e) => {
-  //   var btnText = document.getElementById('showElectionsBtn').innerHTML
-  //   if(btnText.includes('Show')){
-
-  //   }
-  // }
+  showElections = (e) => {
+    var btnText = document.getElementById('showElectionsBtn');
+    var listsBox = document.getElementById('electionsList');
+    if(btnText.innerHTML.includes('Show')){
+      listsBox.style.display = 'block';
+      btnText.innerHTML = 'Hide Upcoming Elections';
+    }else{
+      listsBox.style.display = 'none';
+      btnText.innerHTML = 'Show Upcoming Elections';
+    }
+  }
 
   render(){
     return (
@@ -49,10 +54,12 @@ class MidtermInfoContainer extends Component {
         <div id='upcomingElections'>
           <div id='electionsList'>
             {this.state.elections.map((election)=>{
-              <p key={election.id}>{election.name}</p>
+              return (
+                <p key={election.id}>{election.name}</p>
+              )
             })}
           </div>
-          {/* <button id='showElectionsBtn' onClick={this.showElections}>Show Upcoming Elections</button> */}
+          <button id='showElectionsBtn' onClick={this.showElections}>Show Upcoming Elections</button>
         </div>
         <p>Zip Code: <input id='addyInput' type="text" placeholder="Zip Code" onKeyDown={(e)=>this.getData(e)}/></p>
         <p>React is weird. Either way here's your local voting info</p>
