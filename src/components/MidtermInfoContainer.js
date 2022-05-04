@@ -52,14 +52,14 @@ class MidtermInfoContainer extends Component {
     return (
       <div>
         <div id='upcomingElections'>
+          <button id='showElectionsBtn' onClick={this.showElections}>Show Upcoming Elections</button>
           <div id='electionsList'>
             {this.state.elections.map((election)=>{
               return (
-                <p key={election.id}>{election.name}</p>
+                <p key={election.id}>{election.id} - {election.name}</p>
               )
             })}
           </div>
-          <button id='showElectionsBtn' onClick={this.showElections}>Show Upcoming Elections</button>
         </div>
         <p>Zip Code: <input id='addyInput' type="text" placeholder="Zip Code" onKeyDown={(e)=>this.getData(e)}/></p>
         <p>React is weird. Either way here's your local voting info</p>
